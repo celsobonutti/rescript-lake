@@ -6,3 +6,5 @@ dist-ssr
 lib/
 .vscode
 .bsb.lock
+
+**/*.bs.js
