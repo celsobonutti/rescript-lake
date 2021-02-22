@@ -1,0 +1,18 @@
+####{BSB GENERATED: NO EDIT
+B lib/bs
+FLG -open RescriptLake
+FLG -ppx '/home/dokkora/fun/rescript-lake/node_modules/bs-platform/linux/bsc.exe -as-ppx -bs-jsx 3'
+S /home/dokkora/fun/rescript-lake/node_modules/bs-platform/lib/ocaml
+B /home/dokkora/fun/rescript-lake/node_modules/bs-platform/lib/ocaml
+FLG -w +a-4-9-20-40-41-42-50-61-102
+S /home/dokkora/fun/rescript-lake/node_modules/@rescript/react/lib/ocaml
+B /home/dokkora/fun/rescript-lake/node_modules/@rescript/react/lib/ocaml
+S /home/dokkora/fun/rescript-lake/node_modules/@ryyppy/rescript-promise/lib/ocaml
+B /home/dokkora/fun/rescript-lake/node_modules/@ryyppy/rescript-promise/lib/ocaml
+S /home/dokkora/fun/rescript-lake/node_modules/bs-webapi/lib/ocaml
+B /home/dokkora/fun/rescript-lake/node_modules/bs-webapi/lib/ocaml
+S src
+B lib/bs/src
+S src/bindings
+B lib/bs/src/bindings
+####BSB GENERATED: NO EDIT}

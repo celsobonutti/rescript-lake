@@ -1,0 +1,23 @@
+{
+  "name": "rescript-lake",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:res": "bsb -clean-world -make-world -w",
+    "build": "bsb -clean-world -make-world && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@rescript/react": "^0.10.1",
+    "@ryyppy/rescript-promise": "^1.0.0",
+    "bs-webapi": "^0.19.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-refresh": "^1.1.0",
+    "bs-platform": "^9.0.1",
+    "vite": "^2.0.1",
+    "vite-plugin-rsw": "^1.1.2"
+  }
+}
