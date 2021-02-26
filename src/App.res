@@ -13,11 +13,12 @@ let make = () => {
   React.useEffect0(() => {
     Lake.init()
     ->Promise.then(init => {
-      let emulator = Lake.make(init, ())
-      setEngine(_ => Some(emulator))
+      let emulator = init -> Lake.make()
 
       Lake.listenKeyDown(emulator)
       Lake.listenKeyUp(emulator)
+
+      setEngine(_ => Some(emulator))
 
       Promise.resolve()
     })
@@ -33,31 +34,28 @@ let make = () => {
     )
   })
 
+  let loadGame = (emulator, e) => {
+    ReactEvent.Form.target(e)["files"][0]
+    ->Webapi.File.arrayBuffer
+    ->Promise.then(buffer => {
+      let file = Js.TypedArray2.Uint8Array.fromBuffer(buffer)
+      Lake.load(emulator, file)
+
+      Js.Global.setInterval(_ => {
+        Lake.emulateCycle(emulator)
+        forceUpdate()
+      }, 2)->ignore
+
+      Promise.resolve()
+    })
+    ->ignore
+  }
+
   switch engine {
   | Some(emulator) =>
     <div>
-      <Display display=Lake.screen(emulator) />
-      <input
-        onChange={e => {
-          ReactEvent.Form.target(e)["files"][0]
-          ->Webapi.File.arrayBuffer
-          ->Promise.then(buffer => {
-            let file = Js.TypedArray2.Uint8Array.fromBuffer(buffer)
-            Lake.load(emulator, file)
-
-            let _ = Js.Global.setInterval(_ => {
-              Lake.emulateCycle(emulator)
-              forceUpdate()
-            }, 2)
-
-            Promise.resolve()
-          })
-          ->ignore
-
-          ()
-        }}
-        type_="file"
-      />
+      <Display display={Lake.screen(emulator)} />
+      <input onChange={loadGame(emulator)} type_="file" />
     </div>
   | None => <div> <h1> {React.string("Loading...")} </h1> </div>
   }
