@@ -4,14 +4,17 @@ module Document = Webapi.Dom.Document
 @react.component
 let make = () => {
   let (engine, setEngine) = React.useState(_ => None)
-  let (display, setDisplay) = React.useState(_ => None)
+  let (_, setTick) = React.useState(_ => 0)
+
+  let forceUpdate = () => {
+    setTick(i => i + 1)
+  }
 
   React.useEffect0(() => {
     Lake.init()
     ->Promise.then(init => {
       let emulator = Lake.make(init, ())
       setEngine(_ => Some(emulator))
-      setDisplay(_ => Some(Lake.screen(emulator)))
 
       Lake.listenKeyDown(emulator)
       Lake.listenKeyUp(emulator)
@@ -33,10 +36,7 @@ let make = () => {
   switch engine {
   | Some(emulator) =>
     <div>
-      {switch display {
-      | Some(display) => <Display display />
-      | None => React.null
-      }}
+      <Display display=Lake.screen(emulator) />
       <input
         onChange={e => {
           ReactEvent.Form.target(e)["files"][0]
@@ -47,7 +47,7 @@ let make = () => {
 
             let _ = Js.Global.setInterval(_ => {
               Lake.emulateCycle(emulator)
-              setDisplay(_ => Some(Lake.screen(emulator)))
+              forceUpdate()
             }, 2)
 
             Promise.resolve()
