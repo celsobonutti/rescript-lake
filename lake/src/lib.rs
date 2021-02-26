@@ -5,12 +5,6 @@ use palmer::input::Button;
 use palmer::Chip8;
 use wasm_bindgen::prelude::*;
 
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
-#[cfg(feature = "wee_alloc")]
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 pub struct WebAudioDriver {}
 
 impl palmer::audio::AudioDriver for WebAudioDriver {
@@ -92,6 +86,8 @@ impl Emulator {
 
 #[wasm_bindgen]
 pub fn start_emulator() -> Emulator {
+    utils::set_panic_hook();
+    
     let chip = Chip8::new(WebAudioDriver::new());
     Emulator { emulator: chip }
 }
