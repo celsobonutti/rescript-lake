@@ -4,15 +4,23 @@ use palmer::audio::AudioDriver;
 use palmer::input::Button;
 use palmer::Chip8;
 use wasm_bindgen::prelude::*;
+use web_sys::{Document, Event, window};
 
-pub struct WebAudioDriver {}
+pub struct WebAudioDriver {
+    event: Event
+}
 
 impl palmer::audio::AudioDriver for WebAudioDriver {
     fn new() -> Self {
-        Self {}
+        let event = Event::new("beep").unwrap();
+        Self {
+            event,
+        }
     }
 
-    fn play_sound(&mut self) {}
+    fn play_sound(&mut self) {
+        window().unwrap().document().unwrap().dispatch_event(&self.event).unwrap();
+    }
 }
 
 #[wasm_bindgen]
